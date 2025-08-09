@@ -4,11 +4,10 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Book>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SupplierBook>
  */
-class BookFactory extends Factory
+class SupplierBookFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +17,7 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            'model'=> fake()->word(),
-            'author'=> fake()->name(),
-            'book_id'=> fake()->word(),
-            'year'=>fake()->year(),
+            //
         ];
     }
 }

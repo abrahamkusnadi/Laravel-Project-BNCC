@@ -9,17 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    protected $fillable = [
+        'model',
+        'year',
+    ];
+
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('phones', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('title');
-            $table->string('author');
-            $table->string('publisher');
+            $table->string('model');
             $table->year('year');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->bigInteger('book_id')->unsigned();
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('phones');
     }
 };

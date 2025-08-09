@@ -23,6 +23,12 @@ class DatabaseSeeder extends Seeder
         // $this->call([
         //     BookSeeder::class,
         // ]);
-        Book::factory(50)->create();
+        $this->call([
+            BookSeeder::class,
+        ]);
+
+        // Book::factory(50)->create();
+        
     }
+
 }

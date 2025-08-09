@@ -5,71 +5,83 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-    {
-        return view('welcome');
+    {   
+        $categories = Category::all();
+        return view('welcome', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $req)
     {
-        Book::create([
-            'title' => $req->title,
-            'author'=> $req->author,
-            'publisher'=> $req->publisher,
-            'year'=> $req->year,
+        $nama = $req->file('gambar')->getClientOriginalName();
+        $req->file('gambar')->storeAs('/images', $nama);
+
+        $validate = $req->validate([
+            'title' => 'required',
+            'author'=> 'required',
+            'publisher'=> 'required',
+            'year'=> 'required',
+        ], [
+            'title.required' => 'the title must be filled with a valid one',
         ]);
+        
+
+        if ($validate) {
+                Book::create([
+                'title' => $req->title,
+                'author'=> $req->author,
+                'publisher'=> $req->publisher,
+                'year'=> $req->year,
+                'category_id' => $req->category_id,
+                'book_gambar' => $nama,
+            ]);
+        }
 
         return back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreBookRequest $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Book $book)
+    public function show()
     {
         $books = Book::all();
         return view('list', compact('books'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Book $book)
+    public function edit($id)
     {
-        //
+        $book = Book::findOrFail($id);
+        return view('update', compact('book'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateBookRequest $request, Book $book)
+    public function update($id, Request $req)
     {
-        //
+        Book::findOrFail($id)->update([
+            'title' => $req->title,
+            'author'=> $req->author,
+            'publisher'=> $req->publisher,
+            'year'=> $req->year
+        ]);
+
+        // $books = Book::all();
+        // return view('list', compact('books'));
+
+        return redirect()->route('show');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Book $book)
+
+    public function destroy($id)
     {
-        //
+        Book::destroy($id);
+        return back();
     }
 }

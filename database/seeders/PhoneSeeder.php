@@ -6,21 +6,18 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class BookSeeder extends Seeder
+class PhoneSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('books')->insert([
+        DB::table('phones')->insert([
             'id'=>'1',
-            'title'=> 'Harry Potter',
-            'author'=> 'J.K. Rowling',
-            'publisher'=> 'Gramedia',
-            'year'=>'1990',
-            'category_id' => '1',
-            'book_gambar' => 'sada',
+            'model'=> 'gramedia',
+            'year'=> '2002',
+            'book_id'=> '1',
         ]);
     }
 }
