@@ -42,6 +42,9 @@ class AuthController extends Controller
             'email' => 'required|email|regex:/@gmail\.com$/|unique:users,email',
             'password' => 'required|string|min:6|max:12|confirmed',
             'phone' => 'required|regex:/^08[0-9]{8,13}$/',
+        ], [
+            'email.regex' => 'Email harus menggunakan @gmail.com',
+            'phone.regex' => 'Nomor HP harus diawali dengan 08 dan panjang 10-15 digit',
         ]);
 
         $user = User::create([
@@ -49,13 +52,14 @@ class AuthController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
             'phone' => $req->phone,
-            'role' => 'user',
+            'role' => 'user', // otomatis user
         ]);
 
         Auth::login($user);
 
         return redirect('/');
     }
+
 
     public function logout()
     {
