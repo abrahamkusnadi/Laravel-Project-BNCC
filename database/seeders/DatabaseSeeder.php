@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Book;
+use App\Models\Category;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Product;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,21 +15,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // $food = Category::create(['name' => 'Makanan']);
+        // $drink = Category::create(['name' => 'Minuman']);
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
+        // Product::create([
+        //     'name' => 'Nasi Goreng',
+        //     'category_id' => $food->id,
+        //     'price' => 20000,
+        //     'stock' => 10,
         // ]);
-        // $this->call([
-        //     BookSeeder::class,
-        // ]);
-        $this->call([
-            BookSeeder::class,
-        ]);
 
-        // Book::factory(50)->create();
-        
+        // Product::create([
+        //     'name' => 'Es Teh Manis',
+        //     'category_id' => $drink->id,
+        //     'price' => 5000,
+        //     'stock' => 50,
+        // ]);
+
+        $this->call(AdminSeeder::class);
     }
 
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Http\Request;
+
 
 class CategoryController extends Controller
 {
@@ -13,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view("categories.index", compact("categories"));
     }
 
     /**
@@ -21,15 +24,23 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        Category::create([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('categories.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -45,7 +56,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -53,7 +64,15 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $category->update([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
     }
 
     /**
@@ -61,6 +80,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('categories.index')->with('success','Category deleted successfully');
     }
 }

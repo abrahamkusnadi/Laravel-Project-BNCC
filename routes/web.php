@@ -1,11 +1,31 @@
 <?php
 
-use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/', [BookController::class, 'index'])->name('home');
-Route::post('/book/add', [BookController::class, 'create'])->name('create');
-Route::get('/book', [BookController::class, 'show'])->name('show');
-Route::get('/book/{id}', [BookController::class, 'edit'])->name('edit');
-Route::patch('/book/{id}', [BookController::class,'update'])->name('update');
-Route::delete('/book/{id}', [BookController::class, 'destroy'])->name('delete');
+// Home 
+Route::get('/', [ProductController::class, 'index'])->name('home');
+
+// Products 
+Route::resource('products', ProductController::class)->except(['show']);
+
+// Categories
+Route::resource('categories', CategoryController::class)->except(['show']);
+
+// Invoices
+Route::resource('invoices', InvoiceController::class)->middleware('auth');
+Route::post('/invoices/add/{product}', [InvoiceController::class, 'add'])
+    ->name('invoices.add')
+    ->middleware('auth');
+
+
+// Auth
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
