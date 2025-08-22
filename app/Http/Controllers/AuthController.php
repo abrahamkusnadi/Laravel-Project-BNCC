@@ -52,7 +52,7 @@ class AuthController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
             'phone' => $req->phone,
-            'role' => 'user', // otomatis user
+            'role' => 'user',
         ]);
 
         Auth::login($user);
