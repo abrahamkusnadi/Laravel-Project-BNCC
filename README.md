@@ -94,8 +94,7 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 ---
 
 ### Validation & Middleware
-- Prevent unauthorized access to Admin pages.
-- Validation message if product stock = 0.  
+- Prevent unauthorized access to Admin pages (Only Admin do CRUD).
 
 📷 **Screenshot:**  
 ![Validation](screenshots/validation.png)
