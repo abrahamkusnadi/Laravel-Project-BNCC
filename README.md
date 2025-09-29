@@ -59,7 +59,10 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 - Admin registration only via database seeding.  
 
 📷 **Screenshot:**  
-![Auth Page](screenshots/auth.png)
+## Register
+![Auth Page](screenshots/Register.png)
+## Login
+![Auth Page](screenshots/Login.png)
 
 ---
 
