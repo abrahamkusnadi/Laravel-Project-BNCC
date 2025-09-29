@@ -102,4 +102,11 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 
 ---
 
-## 📂 Project Structure
+## 🙏 Acknowledgment
+This project was developed as part of the **BNCC Bootcamp - Back End Development Final Project** (Bootcamp Calon Praetorian 2025).
+
+---
+
+## 🎥 Demo
+You can watch the full project demo on YouTube:  
+👉 [Click here to watch the demo](https://drive.google.com/file/d/1D6iYUyKTtPdeegFgdwDEKAcRjC8Bq4kz/view?usp=drive_link)
