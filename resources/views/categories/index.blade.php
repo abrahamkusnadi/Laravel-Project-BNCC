@@ -7,7 +7,7 @@
 
     @auth
         @if(Auth::user()->role === 'admin')
-            <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Add Category</a>
+            <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Tambah Category</a>
         @endif
     @endauth
 
@@ -37,7 +37,7 @@
                             <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus kategori ini?')">Delete</button>
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
                             </form>
                         </td>
                     @endif

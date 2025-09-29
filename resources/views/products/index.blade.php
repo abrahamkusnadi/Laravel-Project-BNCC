@@ -46,17 +46,14 @@
                     @auth
                         @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user')
                             <td>
-                                {{-- Admin: Edit & Delete --}}
                                 @if(Auth::user()->role === 'admin')
                                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
                                         @csrf 
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus produk ini?')">Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
                                     </form>
                                 @endif
-
-                                {{-- User: Tambah ke Faktur --}}
                                 @if(Auth::user()->role === 'user')
                                     <form action="{{ route('invoices.add', $product->id) }}" method="POST" style="display:inline;">
                                         @csrf
