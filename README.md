@@ -72,7 +72,17 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 - Product-Category relationship.  
 
 📷 **Screenshot:**  
-![Admin CRUD](screenshots/admin_crud.png)
+## Product
+![Admin CRUD](screenshots/Product.png)
+
+## Add Product
+![Admin CRUD](screenshots/AddProduct.png)
+
+## Category
+![Admin CRUD](screenshots/Category.png)
+
+## Add Category
+![Admin CRUD](screenshots/AddCategory.png)
 
 ---
 
@@ -81,7 +91,7 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 - Add items to invoice (cart).  
 
 📷 **Screenshot:**  
-![Product Catalog](screenshots/catalog.png)
+![Product Catalog](screenshots/MyInvoice.png)
 
 ---
 
@@ -92,7 +102,11 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 - Save invoice to database.  
 
 📷 **Screenshot:**  
-![Invoice Page](screenshots/invoice.png)
+## Invoice
+![Invoice Page](screenshots/Invoice.png)
+
+## Add Invoice
+![Invoice Page](screenshots/AddInvoice.png)
 
 ---
 
@@ -100,7 +114,8 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 - Prevent unauthorized access to Admin pages (Only Admin do CRUD).
 
 📷 **Screenshot:**  
-![Validation](screenshots/validation.png)
+## Example -> Create, Update, Delete for Products
+![Validation](screenshots/Admin.png)
 
 ---
 
