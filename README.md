@@ -52,7 +52,7 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 
 ---
 
-## 🔑 Features Overview
+# 🔑 Features Overview
 
 ### Authentication
 - User Registration & Login (form validation).
