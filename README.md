@@ -54,73 +54,74 @@ As a software developer at **PT Meksiko**, you are tasked by Mr. Raja (the CEO) 
 
 # 🔑 Features Overview
 
-### Authentication
+## Authentication
 - User Registration & Login (form validation).
 - Admin registration only via database seeding.  
 
 📷 **Screenshot:**  
-## Register
+### Register
 ![Auth Page](screenshots/Register.png)
-## Login
+### Login
 ![Auth Page](screenshots/Login.png)
 
 ---
 
-### Admin Role
+## Admin Role
 - Full CRUD operations on products.
 - Image upload handling.
 - Product-Category relationship.  
 
 📷 **Screenshot:**  
-## Product
+### Product
 ![Admin CRUD](screenshots/Product.png)
 
-## Add Product
+### Add Product
 ![Admin CRUD](screenshots/AddProduct.png)
 
-## Category
+### Category
 ![Admin CRUD](screenshots/Category.png)
 
-## Add Category
+### Add Category
 ![Admin CRUD](screenshots/AddCategory.png)
 
 ---
 
-### User Role
+## User Role
 - Browse products in catalog view.  
 - Add items to invoice (cart).  
 
 📷 **Screenshot:**  
+### Example -> Invoices can only be created by users.
 ![Product Catalog](screenshots/MyInvoice.png)
 
 ---
 
-### Invoice (Faktur)
+## Invoice (Faktur)
 - Auto-generated invoice number.
 - Dynamic subtotal & total price calculation.
 - Input shipping address + postal code.
 - Save invoice to database.  
 
 📷 **Screenshot:**  
-## Invoice
+### Invoice
 ![Invoice Page](screenshots/Invoice.png)
 
-## Add Invoice
+### Add Invoice
 ![Invoice Page](screenshots/AddInvoice.png)
 
 ---
 
-### Validation & Middleware
+## Validation & Middleware
 - Prevent unauthorized access to Admin pages (Only Admin do CRUD).
 
 📷 **Screenshot:**  
-## Example -> Create, Update, Delete for Products
+### Example -> Create, Update, Delete for Products
 ![Validation](screenshots/Admin.png)
 
 ---
 
-## 🙏 Acknowledgment
-This project was developed as part of the **BNCC Bootcamp - Back End Development Final Project** (Bootcamp Calon Praetorian 2025).
+## Acknowledgment
+This project was developed and completed as part of the **BNCC Bootcamp - Back End Development Final Project** (Bootcamp Calon Praetorian 2025). It is finalized, though there is room for future enhancements.
 
 ---
 
