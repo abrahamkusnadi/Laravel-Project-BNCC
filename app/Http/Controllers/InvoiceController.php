@@ -23,7 +23,7 @@ class InvoiceController extends Controller
     public function create()
     {
         $products = Product::all();
-        return view('invoices.create', compact('products'));
+        return view('invoices.index', compact('products'));
     }
 
     public function store(Request $request)
@@ -75,7 +75,10 @@ class InvoiceController extends Controller
     }
 
     public function add(Product $product)
-    {
+    {   
+        if ($product->stock < 1) {
+            return redirect()->back()->with('error', "Sorry, {$product->name} is out of stock!");
+        }
         $invoice = Invoice::firstOrCreate(
             ['user_id' => auth()->id(), 'total_price' => 0],
             [
@@ -99,12 +102,15 @@ class InvoiceController extends Controller
             ]);
         }
 
+        $product->stock -= 1;
+        $product->save();
+
         $invoice->update([
             'total_price' => $invoice->items->sum(fn($i) => $i->subtotal),
         ]);
 
         return redirect()->route('invoices.show', $invoice->id)
-            ->with('success', 'Produk ditambahkan ke faktur!');
+            ->with('success', 'Product Added to invoice!');
     }
 
     public function destroy(Invoice $invoice)
@@ -136,8 +142,21 @@ class InvoiceController extends Controller
         $total = 0;
         foreach ($request->items as $itemId => $data) {
             $item = $invoice->items()->findOrFail($itemId);
-            $item->quantity = $data['quantity'];
-            $item->subtotal = $item->product->price * $item->quantity;
+            $product = $item->product;
+
+            $newQty = $data['quantity'];
+            $oldQty = $item->quantity;
+            $stockChange = $newQty - $oldQty;
+
+            if ($stockChange > 0 && $product->stock < $stockChange) {
+                return redirect()->back()->with('error', "Sorry, not enough stock for {$product->name}. Only {$product->stock} left!");
+            }  
+
+            $product->stock -= $stockChange;
+            $product->save();
+
+            $item->quantity = $newQty;
+            $item->subtotal = $newQty * $product->price;
             $item->save();
 
             $total += $item->subtotal;
@@ -145,8 +164,8 @@ class InvoiceController extends Controller
 
         $invoice->update(['total_price' => $total]);
 
-        return redirect()->route('invoices.show', $invoice->id)
-            ->with('success', 'Faktur berhasil diperbarui!');
+        return redirect()->route('invoices.index', $invoice->id)
+            ->with('success', 'Invoice updated successfully!');
     }
 
 }
