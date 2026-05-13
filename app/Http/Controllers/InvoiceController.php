@@ -80,7 +80,7 @@ class InvoiceController extends Controller
             ['user_id' => auth()->id(), 'total_price' => 0],
             [
                 'invoice_number' => 'INV-' . time(),
-                'address' => 'Alamat default',
+                'address' => 'Default Address',
                 'postal_code' => '00000',
             ]
         );

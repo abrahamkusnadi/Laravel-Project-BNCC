@@ -4,11 +4,11 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4">Produk - Produk</h1>
+    <h1 class="mb-4">Products</h1>
 
     @auth
         @if(Auth::user()->role === 'admin')
-            <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Tambah Product</a>
+            <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Add Product</a>
         @endif
     @endauth
     
@@ -38,7 +38,7 @@
                     <td>{{ $product->stock }}</td>
                     <td>
                         @if($product->image)
-                            <img src="{{ asset('storage/images/' . $product->image) }}" style="width: 100px; height: 100px">
+                            <img src="{{ asset('storage/' . $product->image) }}" style="width: 100px; height: 100px">
                         @else
                             <span class="text-muted">No image</span>
                         @endif
@@ -57,7 +57,7 @@
                                 @if(Auth::user()->role === 'user')
                                     <form action="{{ route('invoices.add', $product->id) }}" method="POST" style="display:inline;">
                                         @csrf
-                                        <button type="submit" class="btn btn-success btn-sm">Tambah ke Faktur</button>
+                                        <button type="submit" class="btn btn-success btn-sm">Add to Invoice</button>
                                     </form>
                                 @endif
                             </td>
@@ -66,7 +66,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" class="text-center">Belum ada produk</td>
+                    <td colspan="7" class="text-center">No products available.</td>
                 </tr>
             @endforelse
         </tbody>

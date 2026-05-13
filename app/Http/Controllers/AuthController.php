@@ -31,7 +31,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Kredensial yang Anda masukkan tidak cocok dengan data kami.',
+            'email' => 'These credentials do not match our records',
         ]);
     }
 

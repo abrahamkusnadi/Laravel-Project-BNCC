@@ -21,7 +21,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Price</label>
-        <input type="number" name="price" class="form-control" required placeholder="Masukkan harga tanpa Rp">
+        <input type="number" name="price" class="form-control" required placeholder="Input price without Rp">
     </div>
     <div class="mb-3">
         <label class="form-label">Stock</label>

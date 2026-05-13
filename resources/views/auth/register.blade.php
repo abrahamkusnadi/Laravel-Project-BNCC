@@ -14,7 +14,7 @@
                     <form action="{{ route('register') }}" method="post">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Nama Lengkap</label>
+                            <label for="name" class="form-label">Full Name</label>
                             <input type="text" class="form-control" name="name" id="name" required>
                         </div>
 
@@ -24,17 +24,17 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Nomor HP (format 08...)</label>
+                            <label for="phone" class="form-label">Phone Number (format 08...)</label>
                             <input type="text" class="form-control" name="phone" id="phone" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password (6-12 karakter)</label>
+                            <label for="password" class="form-label">Password (6-12 characters)</label>
                             <input type="password" class="form-control" name="password" id="password" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
                         </div>
 
@@ -42,7 +42,7 @@
                             <button type="submit" class="btn btn-primary">Register</button>
                         </div>
                         <div class="text-center mt-3">
-                            <p>Sudah punya akun? <a href="{{ route('login') }}">Login di sini</a></p>
+                            <p>Already have an account? <a href="{{ route('login') }}">Login here</a></p>
                         </div>
                     </form>
                 </div>

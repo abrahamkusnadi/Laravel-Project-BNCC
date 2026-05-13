@@ -1,36 +1,36 @@
 @extends('layout.master')
 
-@section('title','Faktur')
+@section('title','Invoices')
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4">Faktur Saya</h1>
+    <h1 class="mb-4">My Invoices</h1>
 
-    @foreach($invoices as $invoice)
+    @forelse($invoices as $invoice)
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>
-                    Faktur #{{ $invoice->invoice_number ?? $invoice->id }} 
+                    Invoice #{{ $invoice->invoice_number ?? $invoice->id }} 
                     | Total: Rp {{ number_format($invoice->total_price,0,',','.') }}
                 </span>
 
                 <form action="{{ route('invoices.destroy', $invoice->id) }}" method="POST" onsubmit="return confirm('Yakin hapus faktur ini?')">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Hapus Faktur</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete Invoice</button>
                 </form>
             </div>
             <div class="card-body">
-                <p><strong>Alamat:</strong> {{ $invoice->address }}</p>
-                <p><strong>Kode Pos:</strong> {{ $invoice->postal_code }}</p>
-                <p><strong>Tanggal:</strong> {{ $invoice->created_at->format('d M Y H:i') }}</p>
+                <p><strong>Address:</strong> {{ $invoice->address }}</p>
+                <p><strong>Postal Code:</strong> {{ $invoice->postal_code }}</p>
+                <p><strong>Date:</strong> {{ $invoice->created_at->format('d M Y H:i') }}</p>
 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Produk</th>
+                            <th>Product</th>
                             <th>Qty</th>
-                            <th>Harga</th>
+                            <th>Price</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
@@ -47,7 +47,9 @@
                 </table>
             </div>
         </div>
-    @endforeach
+    @empty
+        <p class="text-center">No invoices available.</p>
+    @endforelse
 </div>
 <div class="d-flex justify-content-center mt-3">
     {{ $invoices->links('pagination::bootstrap-5') }}

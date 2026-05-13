@@ -14,7 +14,7 @@
                     <form action="{{ route('login') }}" method="post">
                         @csrf
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email (hanya @gmail.com)</label>
+                            <label for="email" class="form-label">Email (must be @gmail.com)</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                    name="email" id="email" required>
                             @error('email')
@@ -22,7 +22,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password (6-12 karakter)</label>
+                            <label for="password" class="form-label">Password (6-12 characters)</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
                                    name="password" id="password" required>
                             @error('password')

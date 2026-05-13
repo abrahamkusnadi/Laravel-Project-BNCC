@@ -3,11 +3,11 @@
 @section('title', 'Categories')
 
 @section('content')
-    <h1>Kategori - Kategori </h1>
+    <h1>Categories</h1>
 
     @auth
         @if(Auth::user()->role === 'admin')
-            <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Tambah Category</a>
+            <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Add Category</a>
         @endif
     @endauth
 
@@ -26,7 +26,7 @@
                 @endif
             @endauth
         </tr>
-        @foreach($categories as $category)
+        @forelse($categories as $category)
             <tr>
                 <td>{{ $category->id }}</td>
                 <td>{{ $category->name }}</td>
@@ -43,6 +43,10 @@
                     @endif
                 @endauth
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="3" class="text-center">No categories available.</td>
+            </tr>
+        @endforelse
     </table>
 @endsection

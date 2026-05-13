@@ -18,9 +18,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">Produk</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('categories.index') }}">Kategori</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('invoices.index') }}">Faktur</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('categories.index') }}">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('invoices.index') }}">Invoices</a></li>
                 </ul>
                 <ul class="navbar-nav">
                     @auth
