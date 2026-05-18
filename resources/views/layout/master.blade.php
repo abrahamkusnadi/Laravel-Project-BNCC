@@ -3,53 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'Final Project')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <title>@yield('title') - PT Meksiko</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('home') }}">PT Meksiko</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('categories.index') }}">Categories</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('invoices.index') }}">Invoices</a></li>
-                </ul>
-                <ul class="navbar-nav">
+<body class="bg-gray-50 text-gray-800 antialiased">
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center mr-8">
+                        <span class="text-xl font-bold text-gray-900 tracking-tight">Meksiko Inc.</span>
+                    </div>
+                    <div class="hidden sm:flex sm:space-x-8">
+                        <a href="{{ route('products.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">
+                            Products
+                        </a>
+                        <a href="{{ route('categories.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">
+                            Categories
+                        </a>
+                        <a href="{{ route('invoices.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">
+                            My Invoices
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hidden sm:flex sm:items-center gap-6">
                     @auth
-                        <li class="nav-item">
-                            <span class="navbar-text">Hello, {{ Auth::user()->name }}</span>
-                        </li>
-                        <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-outline-danger">Logout</button>
-                            </form>
-                        </li>
+                        <span class="text-sm font-medium text-gray-600">Hello, {{ Auth::user()->name ?? 'User' }}</span>
+                        <form action="{{ route('logout') }}" method="POST" class="m-0 p-0 flex items-center">
+                            @csrf
+                            <button type="submit" class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors bg-red-50 hover:bg-red-100 px-4 py-1.5 rounded-md">
+                                Logout
+                            </button>
+                        </form>
                     @else
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900">Login</a>
+                        <a href="{{ route('register') }}" class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm">
+                            Register
+                        </a>
                     @endauth
-                </ul>
+                </div>
             </div>
         </div>
     </nav>
-
-
-
-    <div class="container mt-4">
+    <main>
         @yield('content')
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-    </script>
+    </main>
 </body>
 </html>
