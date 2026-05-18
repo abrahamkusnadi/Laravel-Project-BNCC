@@ -79,14 +79,17 @@ class InvoiceController extends Controller
         if ($product->stock < 1) {
             return redirect()->back()->with('error', "Sorry, {$product->name} is out of stock!");
         }
-        $invoice = Invoice::firstOrCreate(
-            ['user_id' => auth()->id(), 'total_price' => 0],
-            [
+
+        $invoice = Invoice::where('user_id', auth()->id())->latest()->first();
+        if (!$invoice) {
+            Invoice::create([
+                'user_id' => auth()->id(), 
+                'total_price' => 0,
                 'invoice_number' => 'INV-' . time(),
                 'address' => 'Default Address',
                 'postal_code' => '00000',
-            ]
-        );
+            ]);
+        }
 
         $item = $invoice->items()->where('product_id', $product->id)->first();
 
