@@ -43,8 +43,8 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|max:12|confirmed',
             'phone' => 'required|regex:/^08[0-9]{8,13}$/',
         ], [
-            'email.regex' => 'Email harus menggunakan @gmail.com',
-            'phone.regex' => 'Nomor HP harus diawali dengan 08 dan panjang 10-15 digit',
+            'email.regex' => 'Email must end with @gmail.com.',
+            'phone.regex' => 'Phone must start with "08" (10-15 digits).',
         ]);
 
         $user = User::create([
