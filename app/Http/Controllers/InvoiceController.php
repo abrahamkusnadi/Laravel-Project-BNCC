@@ -14,7 +14,8 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::with('items.product')
             ->where('user_id', auth()->id())
-            ->paginate(2);
+            ->latest()
+            ->paginate(5);
 
         return view('invoices.index', compact('invoices'));
     }
@@ -80,14 +81,28 @@ class InvoiceController extends Controller
             return redirect()->back()->with('error', "Sorry, {$product->name} is out of stock!");
         }
 
-        $invoice = Invoice::where('user_id', auth()->id())->latest()->first();
+        $invoice = Invoice::where('user_id', auth()->id())->where('status', 'pending')->first();
+
         if (!$invoice) {
-            Invoice::create([
+            $today = now()->format('Ymd');
+            $lastInvoice = Invoice::where('invoice_number', 'LIKE', "INV-{$today}-%")->latest()->first();
+            
+            if ($lastInvoice) {
+                $lastSequence = (int) substr($lastInvoice->invoice_number, -4);
+                $newSequence = str_pad($lastSequence + 1, 4, '0', STR_PAD_LEFT);
+            } else{
+                $newSequence = '0001';
+            }
+
+            $invoiceNumber = "INV-{$today}-{$newSequence}";
+
+            $invoice = Invoice::create([
                 'user_id' => auth()->id(), 
                 'total_price' => 0,
-                'invoice_number' => 'INV-' . time(),
+                'invoice_number' => $invoiceNumber,
                 'address' => 'Default Address',
                 'postal_code' => '00000',
+                'status' => 'pending',
             ]);
         }
 
@@ -109,7 +124,7 @@ class InvoiceController extends Controller
         $product->save();
 
         $invoice->update([
-            'total_price' => $invoice->items->sum(fn($i) => $i->subtotal),
+            'total_price' => $invoice->items->sum('subtotal'),
         ]);
 
         return redirect()->route('invoices.show', $invoice->id)
@@ -125,7 +140,7 @@ class InvoiceController extends Controller
 
         $invoice->delete();
 
-        return redirect()->route('invoices.index')->with('success', 'Faktur berhasil dihapus.');
+        return redirect()->route('invoices.index')->with('success', 'Invoice deleted successfully.');
     }
 
     public function update(Request $request, Invoice $invoice)
@@ -165,7 +180,10 @@ class InvoiceController extends Controller
             $total += $item->subtotal;
         }
 
-        $invoice->update(['total_price' => $total]);
+        $invoice->update([
+            'total_price' => $total,
+            'status' => 'completed'
+        ]);
 
         return redirect()->route('invoices.index', $invoice->id)
             ->with('success', 'Invoice updated successfully!');
