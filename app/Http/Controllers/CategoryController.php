@@ -33,12 +33,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
         ]);
 
-        Category::create([
-            'name' => $request->name
-        ]);
+        Category::create($request->all());
 
         return redirect()->route('categories.index')->with('success', 'Category created successfully');
     }
@@ -65,12 +64,11 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|string|max:255',
+            'description'=> 'nullable|string|max:500',
         ]);
 
-        $category->update([
-            'name' => $request->name
-        ]);
+        $category->update([$request->all()]);
 
         return redirect()->route('categories.index')->with('success', 'Category updated successfully');
     }
