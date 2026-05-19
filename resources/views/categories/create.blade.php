@@ -5,7 +5,6 @@
 @section('content')
 <div class="max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
     
-    {{-- Header --}}
     <div class="mb-8">
         <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Add New Category</h1>
         <p class="text-sm text-gray-500 mt-1">Create a new group to organize your products efficiently.</p>

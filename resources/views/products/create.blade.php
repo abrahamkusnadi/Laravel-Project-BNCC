@@ -5,13 +5,11 @@
 @section('content')
 <div class="max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
     
-    {{-- Header --}}
     <div class="mb-8">
         <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Add New Product</h1>
         <p class="text-sm text-gray-500 mt-1">Create a new item in your inventory with category and stock details.</p>
     </div>
 
-    {{-- Alert Validation Errors --}}
     @if($errors->any())
         <div class="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm">
             <ul class="list-disc list-inside">
@@ -22,13 +20,11 @@
         </div>
     @endif
 
-    {{-- Form Card --}}
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
             <div class="space-y-6">
-                {{-- Category Select --}}
                 <div>
                     <label class="block text-sm font-semibold text-gray-900 mb-2">Category</label>
                     <select name="category_id" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-200 appearance-none text-gray-900" required>
@@ -41,14 +37,12 @@
                     </select>
                 </div>
 
-                {{-- Product Name Input --}}
                 <div>
                     <label class="block text-sm font-semibold text-gray-900 mb-2">Product Name</label>
                     <input type="text" name="name" value="{{ old('name') }}" minlength="5" maxlength="80" placeholder="e.g. Premium Fried Rice" required
                            class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-200">
                 </div>
 
-                {{-- Price & Stock Row (Dibuat berdampingan agar ringkas dan rapi) --}}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2">Price (IDR)</label>
@@ -68,7 +62,6 @@
                     </div>
                 </div>
 
-                {{-- Image File Input --}}
                 <div>
                     <label class="block text-sm font-semibold text-gray-900 mb-2">Product Image</label>
                     <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-xl bg-gray-50 hover:bg-white transition duration-200">
@@ -88,7 +81,6 @@
                 </div>
             </div>
 
-            {{-- Footer Buttons --}}
             <div class="mt-10 pt-6 border-t border-gray-100 flex items-center justify-end gap-4">
                 <a href="{{ route('products.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">
                     Cancel
@@ -102,7 +94,6 @@
 </div>
 
 <script>
-    // Script opsional untuk mengubah teks 'Upload a file' menjadi nama file saat file dipilih
     document.querySelector('input[type="file"]').addEventListener('change', function(e) {
         var fileName = e.target.files[0].name;
         var fileLabel = e.target.parentElement.querySelector('span');

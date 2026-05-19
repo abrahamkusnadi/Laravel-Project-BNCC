@@ -5,14 +5,12 @@
 @section('content')
 <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
     
-    {{-- Header Section --}}
     <div class="mb-8 flex justify-between items-end">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Products</h1>
             <p class="text-sm text-gray-500 mt-1">Manage your inventory and add items to invoices</p>
         </div>
         
-        {{-- Tombol Add Product (Hanya Admin) --}}
         @auth
             @if(Auth::user()->role === 'admin')
                 <a href="{{ route('products.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors shadow-sm">
@@ -22,7 +20,6 @@
         @endauth
     </div>
 
-    {{-- Alert Messages --}}
     @if(session('error'))
         <div class="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
             {{ session('error') }}
@@ -34,7 +31,6 @@
         </div>
     @endif
 
-    {{-- Table Container --}}
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -56,7 +52,6 @@
                         <tr class="hover:bg-gray-50 transition-colors">
                             <td class="py-4 px-6 text-gray-400">{{ $product->id }}</td>
                             
-                            {{-- Category Badge --}}
                             <td class="py-4 px-6">
                                 <span class="bg-gray-100 border border-gray-200 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">
                                     {{ $product->category->name ?? 'Uncategorized' }}
@@ -67,16 +62,14 @@
                             
                             <td class="py-4 px-6 text-gray-600">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                             
-                            {{-- Stock Badge (Merah jika stok menipis < 15) --}}
                             <td class="py-4 px-6 text-center">
-                                @if($product->stock < 15)
+                                @if($product->stock < 10)
                                     <span class="bg-red-50 text-red-600 px-3 py-1 rounded-full text-xs font-medium">{{ $product->stock }}</span>
                                 @else
                                     <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">{{ $product->stock }}</span>
                                 @endif
                             </td>
                             
-                            {{-- Image --}}
                             <td class="py-4 px-6">
                                 @if($product->image)
                                     <img src="{{ asset('storage/' . $product->image) }}" class="w-12 h-12 rounded-lg object-cover border border-gray-200 shadow-sm" alt="{{ $product->name }}">
@@ -87,18 +80,15 @@
                                 @endif
                             </td>
                             
-                            {{-- Actions --}}
                             @auth
                                 <td class="py-4 px-6">
                                     <div class="flex items-center justify-end gap-4">
                                         
                                         @if(Auth::user()->role === 'admin')
-                                            {{-- Icon Edit --}}
                                             <a href="{{ route('products.edit', $product->id) }}" class="text-gray-400 hover:text-blue-600 transition" title="Edit">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                             </a>
                                             
-                                            {{-- Icon Delete --}}
                                             <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                                 @csrf 
                                                 @method('DELETE')
@@ -108,7 +98,6 @@
                                             </form>
                                         @endif
                                         
-                                        {{-- Add to Invoice Button (Hitam Elegan sesuai desain) --}}
                                         @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user')
                                             <form action="{{ route('invoices.add', $product->id) }}" method="POST" class="inline-block">
                                                 @csrf
