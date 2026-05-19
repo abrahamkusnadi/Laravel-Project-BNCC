@@ -5,7 +5,6 @@
 @section('content')
 <div class="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
     
-    {{-- Alert Messages --}}
     @if(session('error'))
         <div class="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
             {{ session('error') }}
@@ -19,17 +18,20 @@
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
         
-        {{-- Header & Date --}}
-        <div class="mb-8 border-b border-gray-100 pb-6">
-            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Invoice #{{ $invoice->invoice_number }}</h1>
-            <p class="text-sm text-gray-500 mt-1">{{ $invoice->created_at->format('M d, Y') }}</p>
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-4">
+                <h1 class="text-2xl font-bold text-gray-900">Invoice #{{ $invoice->invoice_number }}</h1>
+                <span class="px-3 py-1 text-xs font-semibold rounded-full capitalize {{ $invoice->status == 'pending' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">
+                    {{ $invoice->status }}
+                </span>
+            </div>
+            <p class="text-sm text-gray-500">{{ $invoice->created_at->format('M d, Y') }}</p>
         </div>
-
+        
         <form action="{{ route('invoices.update', $invoice->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            {{-- Input Address & Postal Code --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                 <div>
                     <label class="block text-sm font-semibold text-gray-900 mb-2">Address</label>
@@ -43,7 +45,6 @@
                 </div>
             </div>
 
-            {{-- Items Table --}}
             <div class="mb-8">
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -72,15 +73,12 @@
                 </table>
             </div>
 
-            {{-- Footer (Total & Buttons) --}}
             <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-                {{-- Back Button --}}
                 <a href="{{ route('invoices.index') }}" class="flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition shadow-sm w-full sm:w-auto justify-center">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Back
                 </a>
 
-                {{-- Total & Save --}}
                 <div class="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                     <div class="text-right">
                         <p class="text-xs text-gray-500 font-medium">Total Price</p>
