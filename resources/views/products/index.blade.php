@@ -98,7 +98,7 @@
                                             </form>
                                         @endif
                                         
-                                        @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user')
+                                        @if(Auth::user()->role === 'user')
                                             <form action="{{ route('invoices.add', $product->id) }}" method="POST" class="inline-block">
                                                 @csrf
                                                 <button type="submit" class="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -27,6 +28,7 @@ Route::resource('categories', CategoryController::class)->only(['index','show'])
 
 // Invoices (Must login)
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('invoices', InvoiceController::class)->middleware('auth');
     Route::post('/invoices/add/{product}', [InvoiceController::class, 'add'])->name('invoices.add');
 });
