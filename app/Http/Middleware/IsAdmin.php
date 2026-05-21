@@ -19,6 +19,6 @@ class IsAdmin
             return $next($request);
         } 
 
-        return redirect()->route("home")->with('error', 'Access Denied: You do not have permission to access this page.');
+        return redirect()->route("user.dashboard")->with('error', 'Access Denied: You do not have permission to access this page.');
     }
 }

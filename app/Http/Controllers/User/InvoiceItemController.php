@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\invoice_item;
 use App\Http\Requests\Storeinvoice_itemRequest;
 use App\Http\Requests\Updateinvoice_itemRequest;

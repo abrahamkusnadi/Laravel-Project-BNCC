@@ -65,9 +65,10 @@
         <div class="absolute w-64 h-64 border-2 border-white/10 rounded-3xl rotate-12 top-1/4 left-10"></div>
 
         <div class="relative z-10 text-center max-w-lg">
-            <h2 class="text-3xl font-bold text-white mb-4">Inventory, simplified.</h2>
+            <h2 class="text-4xl font-bold text-white mb-4">Commerce, redefined.</h2>
             <p class="text-indigo-100 text-lg leading-relaxed opacity-90">
-                Everything you need to manage your daily business operations, wrapped in a clean, fast, and intuitive interface</p>
+                Welcome to Meksiko Inc. Your all-in-one platform to discover premium products and manage business operations seamlessly.
+            </p>
         </div>
     </div>
 </div>

@@ -15,7 +15,7 @@
         <div class="max-w-md w-full">
             <div class="mb-8 text-center lg:text-left">
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">Create account</h1>
-                <p class="text-gray-500 mt-2">Join us to start managing your assets</p>
+                <p class="text-gray-500 mt-2">Join us to start your premium shopping experience</p>
             </div>
             
             @if(session('error'))
@@ -83,9 +83,9 @@
         <div class="absolute w-80 h-80 border-2 border-white/5 rounded-full -bottom-10 -left-10"></div>
         
         <div class="relative z-10 text-center max-w-lg text-white">
-            <h2 class="text-3xl font-bold mb-4">The new standard for stock tracking</h2>
+            <h2 class="text-4xl font-bold mb-4">Shopping, elevated.</h2>
             <p class="text-indigo-100 text-lg opacity-90 leading-relaxed">
-                Join thousands of businesses worldwide using Meksiko Inc. to scale their inventory operations effortlessly.
+                Join thousands of customers who trust Meksiko Inc. to discover top-tier products with a seamless, intuitive experience.
             </p>
         </div>
     </div>

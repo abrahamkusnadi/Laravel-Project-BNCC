@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.admin')
 
 @section('title', 'Add New Product')
 
@@ -21,7 +21,7 @@
     @endif
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
             <div class="space-y-6">
@@ -63,26 +63,39 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-900 mb-2">Product Image</label>
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-xl bg-gray-50 hover:bg-white transition duration-200">
-                        <div class="space-y-1 text-center">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Product Image</label>
+                    
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl relative overflow-hidden bg-gray-50 hover:bg-gray-100 transition h-48 cursor-pointer" onclick="document.getElementById('image').click()">
+                        
+                        <div class="space-y-1 text-center flex flex-col items-center justify-center" id="upload-ui">
                             <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4-4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <div class="flex text-sm text-gray-600 justify-center">
-                                <label class="relative cursor-pointer rounded-md font-semibold text-blue-600 hover:text-blue-500 focus-within:outline-none">
-                                    <span>Upload a file</span>
-                                    <input type="file" name="image" class="sr-only">
-                                </label>
+                                <span class="relative bg-transparent rounded-md font-medium text-gray-900 hover:text-blue-600 focus-within:outline-none">
+                                    Upload a file
+                                </span>
                             </div>
-                            <p class="text-xs text-gray-500">PNG, JPG, JPEG up to 2MB</p>
+                            <p class="text-xs text-gray-500" id="file-info">PNG, JPG, JPEG up to 2MB</p>
                         </div>
+
+                        <input id="image" name="image" type="file" class="sr-only" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(event)">
+
+                        <div id="image-preview-container" class="hidden absolute inset-0 w-full h-full bg-white flex flex-col items-center justify-center">
+                            <img id="image-preview" src="" alt="Preview" class="h-full w-full object-contain p-2">
+                            
+                            <div class="absolute bottom-3 bg-gray-900/70 text-white text-xs px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm flex items-center gap-2 hover:bg-gray-900 transition">
+                                <span id="preview-file-name">filename.jpg</span>
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
             <div class="mt-10 pt-6 border-t border-gray-100 flex items-center justify-end gap-4">
-                <a href="{{ route('products.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">
+                <a href="{{ route('admin.products.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">
                     Cancel
                 </a>
                 <button type="submit" class="bg-gray-900 hover:bg-black text-white px-8 py-2.5 rounded-lg text-sm font-medium transition shadow-sm">
@@ -94,11 +107,28 @@
 </div>
 
 <script>
-    document.querySelector('input[type="file"]').addEventListener('change', function(e) {
-        var fileName = e.target.files[0].name;
-        var fileLabel = e.target.parentElement.querySelector('span');
-        fileLabel.textContent = fileName;
-        fileLabel.className = "text-gray-900 font-semibold";
-    });
+    function previewImage(event) {
+        const input = event.target;
+        const uploadUI = document.getElementById('upload-ui');
+        const previewContainer = document.getElementById('image-preview-container');
+        const previewImage = document.getElementById('image-preview');
+        const previewFileName = document.getElementById('preview-file-name');
+
+        // Pastikan ada file yang dipilih
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            
+            // Buat URL sementara untuk file gambar yang dipilih di lokal
+            previewImage.src = URL.createObjectURL(file);
+            
+            // Tampilkan nama file di pill hitam bawah gambar
+            previewFileName.textContent = file.name;
+            
+            // Sembunyikan ikon upload, tampilkan gambar preview
+            uploadUI.classList.add('hidden');
+            previewContainer.classList.remove('hidden');
+        }
+    }
 </script>
 @endsection
+

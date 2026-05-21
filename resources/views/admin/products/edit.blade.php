@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.admin')
 
 @section('title', 'Edit Product')
 
@@ -21,7 +21,7 @@
     @endif
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             
@@ -88,7 +88,7 @@
             </div>
 
             <div class="mt-10 pt-6 border-t border-gray-100 flex items-center justify-end gap-4">
-                <a href="{{ route('products.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">
+                <a href="{{ route('admin.products.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">
                     Cancel
                 </a>
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2.5 rounded-lg text-sm font-medium transition shadow-sm">

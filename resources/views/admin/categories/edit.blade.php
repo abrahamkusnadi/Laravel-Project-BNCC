@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.admin')
 
 @section('title', 'Edit Category')
 
@@ -11,7 +11,7 @@
     </div>
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-        <form action="{{ route('categories.update', $category->id) }}" method="POST">
+        <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
             @csrf
             @method('PUT')
             
@@ -30,7 +30,7 @@
             </div>
 
             <div class="mt-10 pt-6 border-t border-gray-100 flex items-center justify-end gap-4">
-                <a href="{{ route('categories.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">
+                <a href="{{ route('admin.categories.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">
                     Back to List
                 </a>
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2.5 rounded-lg text-sm font-medium transition shadow-sm">

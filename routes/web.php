@@ -1,36 +1,57 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Controller;
 
-// Authentication Routes
+// 📁 Admin Controllers
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+
+// 📁 User Controllers
+use App\Http\Controllers\User\DashboardController as UserDashboard;
+use App\Http\Controllers\User\CatalogController;
+use App\Http\Controllers\User\InvoiceController;
+
+// ─── 1. ROOT REDIRECT ────────────────────────────────────────
+// Langsung arahkan pengunjung ke halaman login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+// ─── 2. AUTHENTICATION ROUTES ────────────────────────────────
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Products & Categories CRUD (Must login and has admin role)
-Route::middleware(['auth', IsAdmin::class])->group(function () {
-    Route::resource('products', ProductController::class)->except(['index', 'show']);
-    Route::resource('categories', CategoryController::class)->except(['index','show']);
+// ─── 3. ADMIN ROUTES (Prefix: /admin, Name: admin.*) ─────────
+Route::prefix('admin')->name('admin.')->middleware(['auth', IsAdmin::class])->group(function () {
+    
+    // Admin Dashboard -> name('admin.dashboard')
+    Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+    
+    // Products & Categories (Full CRUD tanpa except karena sudah dipisah)
+    Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class);
 });
 
-// Public Route 
-Route::get('/', [ProductController::class, 'index'])->name('home');
-Route::resource('products', ProductController::class)->only(['index', 'show']);
-Route::resource('categories', CategoryController::class)->only(['index','show']);
-
-// Invoices (Must login)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('invoices', InvoiceController::class)->middleware('auth');
-    Route::post('/invoices/add/{product}', [InvoiceController::class, 'add'])->name('invoices.add');
+// ─── 4. USER ROUTES (Prefix: /user, Name: user.*) ────────────
+Route::prefix('user')->name('user.')->middleware(['auth'])->group(function () {
+    
+    // User Dashboard -> name('user.dashboard')
+    Route::get('/dashboard', [UserDashboard::class, 'index'])->name('dashboard');
+    
+    // Catalog (Sebagai pengganti Products Index milik publik)
+    Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog');
+    Route::post('/catalog/add-to-invoice/{product}', [CatalogController::class, 'addToInvoice'])->name('catalog.add');
+    
+    // Invoices (Faktur & Checkout)
+    Route::get('/cart', [InvoiceController::class, 'currentCart'])->name('cart');
+    Route::resource('invoices', InvoiceController::class);
 });
-
-

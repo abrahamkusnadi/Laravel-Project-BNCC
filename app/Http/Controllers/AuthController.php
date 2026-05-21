@@ -21,18 +21,25 @@ class AuthController extends Controller
 
     public function login(Request $req)
     {
-        $req->validate([
+        $credentials = $req->validate([
             'email' => 'required|email|regex:/@gmail\.com$/',
             'password' => 'required|string|min:6|max:12',
         ]);
 
-        if (Auth::attempt($req->only('email', 'password'))) {
-            return redirect()->intended('/');
+        if (auth()->attempt($credentials)) {
+            $req->session()->regenerate();
+            
+            if(auth()->user()->role == 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Welcome back, Admin!');
+            }
+
+            return redirect()->route('user.dashboard')->with('success', 'Login successful!');
         }
+    
 
         return back()->withErrors([
             'email' => 'These credentials do not match our records',
-        ]);
+        ])->onlyInput('email');
     }
 
     public function register(Request $req)
