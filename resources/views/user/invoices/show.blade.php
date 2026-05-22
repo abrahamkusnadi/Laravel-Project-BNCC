@@ -16,6 +16,23 @@
             </div>
         @endif
 
+        {{-- Top Navigation & Print Action --}}
+        <div class="mb-6 flex justify-between items-center">
+            <a href="{{ route('user.invoices.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition flex items-center gap-2">
+                &larr; Back to Invoices
+            </a>
+
+            {{-- Tombol Print Hanya Muncul Jika Invoice Sudah Completed --}}
+            @if($invoice->status == 'completed')
+                <a href="{{ route('user.invoices.print', $invoice->id) }}" target="_blank" class="inline-flex items-center gap-2 bg-gray-900 hover:bg-black text-white text-sm font-medium px-5 py-2.5 rounded-xl transition shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                    </svg>
+                    Print Invoice
+                </a>
+            @endif
+        </div>
+
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
             
             <div class="flex items-center justify-between mb-8">
@@ -36,12 +53,14 @@
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2">Address</label>
                         <input type="text" name="address" value="{{ old('address', $invoice->address) }}" 
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900 transition" required>
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900 transition disabled:opacity-60 disabled:cursor-not-allowed" 
+                            {{ $invoice->status == 'completed' ? 'disabled' : 'required' }}>
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2">Postal Code</label>
                         <input type="text" name="postal_code" value="{{ old('postal_code', $invoice->postal_code) }}" 
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900 transition" required>
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900 transition disabled:opacity-60 disabled:cursor-not-allowed" 
+                            {{ $invoice->status == 'completed' ? 'disabled' : 'required' }}>
                     </div>
                 </div>
 
@@ -62,7 +81,8 @@
                                     <input type="number" name="items[{{ $item->id }}][quantity]" 
                                         value="{{ old('items.'.$item->id.'.quantity', $item->quantity) }}" 
                                         min="1" 
-                                        class="w-20 bg-gray-50 border border-gray-200 text-center rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 transition mx-auto">
+                                        class="w-20 bg-gray-50 border border-gray-200 text-center rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 transition mx-auto disabled:opacity-60 disabled:cursor-not-allowed"
+                                        {{ $invoice->status == 'completed' ? 'disabled' : '' }}>
                                 </td>
                                 <td class="py-5 text-right font-medium text-gray-600">
                                     Rp {{ number_format($item->subtotal, 0, ',', '.') }}
@@ -73,20 +93,19 @@
                     </table>
                 </div>
 
-                <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <a href="{{ route('user.invoices.index') }}" class="flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition shadow-sm w-full sm:w-auto justify-center">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                        Back
-                    </a>
-
+                <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-end items-center gap-4">
                     <div class="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                         <div class="text-right">
                             <p class="text-xs text-gray-500 font-medium">Total Price</p>
                             <p class="text-lg font-bold text-gray-900">Rp {{ number_format($invoice->total_price, 0, ',', '.') }}</p>
                         </div>
-                        <button type="submit" class="bg-gray-900 hover:bg-black text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow-sm">
-                            Save Changes
-                        </button>
+                        
+                        {{-- Tombol Save Changes Hanya Muncul Jika Masih Pending --}}
+                        @if($invoice->status == 'pending')
+                            <button type="submit" class="bg-gray-900 hover:bg-black text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow-sm">
+                                Complete Checkout
+                            </button>
+                        @endif
                     </div>
                 </div>
 

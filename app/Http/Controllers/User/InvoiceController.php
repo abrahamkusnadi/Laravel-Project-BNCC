@@ -32,6 +32,16 @@ class InvoiceController extends Controller
         return redirect()->route('user.catalog')->with('error', 'Your cart is empty. Start shopping now!');
     }
 
+    public function print(Invoice $invoice)
+    {
+        if ($invoice->user_id != auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $invoice->load('items.product');
+        return view('user.invoices.print', compact('invoice'));
+    }
+
     public function show(Invoice $invoice)
     {
         // Pastikan user tidak bisa mengintip invoice milik orang lain

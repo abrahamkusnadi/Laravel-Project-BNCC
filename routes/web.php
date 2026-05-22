@@ -53,5 +53,6 @@ Route::prefix('user')->name('user.')->middleware(['auth'])->group(function () {
     
     // Invoices (Faktur & Checkout)
     Route::get('/cart', [InvoiceController::class, 'currentCart'])->name('cart');
+    Route::get('/invoices/{invoice}/print', [InvoiceController::class, 'print'])->name('invoices.print');
     Route::resource('invoices', InvoiceController::class);
 });
