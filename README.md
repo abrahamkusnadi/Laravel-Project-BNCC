@@ -96,8 +96,8 @@ To run this project locally, follow these steps:
 
 1. **Clone the repository**
 ```bash
-git clone [https://github.com/abrahamkusnadi/Laravel-Project-BNCC.git](https://github.com/abrahamkusnadi/Laravel-Project-BNCC.git)
-cd meksiko-inc
+git clone https://github.com/abrahamkusnadi/Laravel-Project-BNCC.git
+cd Laravel-Project-BNCC
 ```
 2. **Install dependencies**
 ```bash
