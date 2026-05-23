@@ -108,7 +108,7 @@ composer install
 cp .env.example .env
 php artisan key:generate
 ```
-4. Database Migration & Seeding
+4. Database Migration & Seeding (For Admin Account)
 ```bash
 php artisan migrate --seed
 ```
@@ -120,6 +120,11 @@ php artisan storage:link
 ```bash
 php artisan serve
 ```
+
+## 🔐 Default Test Credentials
+After running the database seeder (Step 4), you can immediately access the Admin Dashboard using the following credentials:
+- Email: admin@gmail.com
+- Password: admin123
 
 ## 🙏 Acknowledgment
 This project was originally developed as the capstone requirement for the BNCC Bootcamp - Calon Praetorian 2025. The current version reflects significant self-driven improvements to meet higher industry standards.
