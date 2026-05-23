@@ -73,8 +73,10 @@ A frictionless checkout experience. Users can browse the catalog, add items to t
   ![Catalog](screenshots/Catalog.png)
 - **Active Invoice / Cart**  
   ![Invoice Details](screenshots/AddInvoice.png)  
-- **Invoice History (State: Completed)**  
-  ![My Invoices](screenshots/MyInvoice.png)  
+- **Invoice History**  
+  ![My Invoices](screenshots/MyInvoice.png)
+- **Invoice Completed**  
+  ![My Invoices](screenshots/InvoiceCompleted.png)  
 - **PDF Invoice Printing**  
   ![Print Invoice](screenshots/PrintInvoice.png)  
 
