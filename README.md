@@ -86,7 +86,7 @@ A frictionless checkout experience. Users can browse the catalog, add items to t
 
 To see the state management, stock validation, and the Tailwind CSS responsive UI in action, please watch the full project demo:
 
-👉 **[Watch the Demo Video Here](https://drive.google.com/file/d/1D6iYUyKTtPdeegFgdwDEKAcRjC8Bq4kz/view?usp=drive_link)**
+👉 **[Watch the Demo Video Here](https://youtu.be/KpiExPd_ghw)**
 
 ---
 
