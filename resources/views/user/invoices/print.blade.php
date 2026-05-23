@@ -8,8 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        
-        /* CSS Khusus Print (Menghilangkan tombol print saat dicetak di kertas) */
         @media print {
             .no-print { display: none !important; }
             body { background-color: white !important; }
@@ -18,8 +16,6 @@
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 py-10 antialiased">
-
-    {{-- Tombol Aksi (Hanya terlihat di layar, hilang saat dicetak) --}}
     <div class="max-w-4xl mx-auto mb-6 px-8 flex justify-between items-center no-print">
         <a href="{{ route('user.invoices.show', $invoice->id) }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition flex items-center gap-2">
             &larr; Back to Details
@@ -30,10 +26,7 @@
         </button>
     </div>
 
-    {{-- Kertas Invoice --}}
     <div class="max-w-4xl mx-auto bg-white p-12 shadow-sm border border-gray-200">
-        
-        {{-- Header --}}
         <div class="flex justify-between items-start mb-12">
             <div>
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">Meksiko Inc.</h1>
@@ -43,8 +36,6 @@
                 <h2 class="text-3xl font-bold text-gray-200 uppercase tracking-widest">Invoice</h2>
             </div>
         </div>
-
-        {{-- Meta Data (Kiri: Alamat, Kanan: Info Invoice) --}}
         <div class="grid grid-cols-2 gap-8 mb-10">
             <div>
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Billed To</p>
@@ -72,7 +63,6 @@
             </div>
         </div>
 
-        {{-- Tabel Barang --}}
         <table class="w-full text-left mb-10">
             <thead>
                 <tr class="border-b-2 border-gray-900 text-xs font-bold text-gray-900 uppercase tracking-wider">
@@ -94,7 +84,6 @@
             </tbody>
         </table>
 
-        {{-- Total Kalkulasi --}}
         <div class="w-1/2 ml-auto">
             <div class="flex justify-between items-center py-2 text-sm text-gray-600">
                 <span>Subtotal</span>
@@ -110,7 +99,6 @@
             </div>
         </div>
 
-        {{-- Footer --}}
         <div class="mt-20 pt-8 border-t border-gray-100 text-center text-xs text-gray-400">
             <p>Thank you for shopping with Meksiko Inc.</p>
             <p class="mt-1">If you have any questions concerning this invoice, contact support@meksiko.inc</p>
