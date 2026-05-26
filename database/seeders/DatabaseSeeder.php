@@ -33,6 +33,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(AdminSeeder::class);
+
+        Category::create(['name' => 'Electronics', 'description' => 'Electronic devices and gadgets']);
+        Category::create(['name' => 'Furniture', 'description' => 'Furniture and home decor']);
+        Category::create(['name' => 'Foods', 'description' => 'Food items and groceries']);
+        Category::create(['name' => 'Drinks', 'description' => 'Beverages and drinks']);
     }
 
 }
