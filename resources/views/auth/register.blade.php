@@ -43,13 +43,13 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Email (@gmail.com)</label>
-                    <input type="email" name="email" placeholder="john@gmail.com" required 
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="john@gmail.com" required 
                            class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-200">
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Phone Number</label>
-                    <input type="text" name="phone" placeholder="08..." required 
+                    <input type="text" name="phone" value="{{ old('phone') }}" placeholder="08..." required 
                            class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-200">
                 </div>
 
