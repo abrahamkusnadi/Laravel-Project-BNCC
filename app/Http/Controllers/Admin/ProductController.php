@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -31,12 +32,8 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $namaFile = $request->file('image')->getClientOriginalName();
-
-            $path = $request->file('image')->storeAs('images', $namaFile, 'public');
-
-            $validated['image'] = $path;
+        if ($request->hasFile('image')) { 
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
         Product::create($validated);
@@ -66,6 +63,7 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
+            Storage::disk('public')->delete($product->image);
             $validated['image'] = $request->file('image')->store('products', 'public');
         } else {
             $validated['image'] = $product->image; // kalau tidak upload, pakai gambar lama
@@ -79,6 +77,10 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
         return redirect()->route('admin.products.index')->with('success','Product deleted successfully');
     }
 }
