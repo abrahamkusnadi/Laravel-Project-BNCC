@@ -64,13 +64,18 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect()->route('login')->with('success', 'Successfully registered! Please login with your credentials.');
     }
 
 
-    public function logout()
+public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/');
+        
+        // Deleting session
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'You have been successfully logged out.');
     }
 }

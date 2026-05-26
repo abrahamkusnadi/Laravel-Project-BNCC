@@ -17,6 +17,15 @@
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">Welcome back</h1>
                 <p class="text-gray-500 mt-2">Sign in to your account to continue</p>
             </div>
+            
+            @if(session('success'))
+            <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm flex items-center gap-3 shadow-sm">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="font-medium">{{ session('success') }}</span>
+            </div>
+            @endif
 
             @if(session('error'))
                 <div class="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm">
