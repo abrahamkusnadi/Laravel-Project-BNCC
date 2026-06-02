@@ -149,45 +149,49 @@ Product (1)
 ```mermaid
 erDiagram
 
+    USERS ||--o{ INVOICES : creates
+
     CATEGORIES ||--o{ PRODUCTS : contains
 
-    USERS ||--o{ INVOICES : creates
+    PRODUCTS ||--o{ INVOICE_ITEMS : appears_in
 
     INVOICES ||--o{ INVOICE_ITEMS : contains
 
-    PRODUCTS ||--o{ INVOICE_ITEMS : purchased_in
+    USERS {
+        bigint id PK
+        string name
+        string admin_id
+        string email
+        string password
+        string phone
+        string role
+        datetime created_at
+    }
 
     CATEGORIES {
         bigint id PK
         string name
-        text description
+        datetime created_at
     }
 
     PRODUCTS {
         bigint id PK
         bigint category_id FK
         string name
-        decimal price
+        int price
         int stock
         string image
-    }
-
-    USERS {
-        bigint id PK
-        string name
-        string email
-        string phone
-        string password
+        datetime created_at
     }
 
     INVOICES {
         bigint id PK
-        bigint user_id FK
         string invoice_number
+        bigint user_id FK
         string address
         string postal_code
-        decimal total_price
-        string status
+        int total_price
+        datetime created_at
     }
 
     INVOICE_ITEMS {
@@ -195,9 +199,11 @@ erDiagram
         bigint invoice_id FK
         bigint product_id FK
         int quantity
-        decimal subtotal
+        int subtotal
+        datetime created_at
     }
 ```
+
 ---
 
 # 🛠 Tech Stack
