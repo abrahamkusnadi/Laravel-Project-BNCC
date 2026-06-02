@@ -75,16 +75,18 @@
                         </thead>
                         <tbody class="divide-y divide-gray-100 text-sm text-gray-800">
                             @foreach($invoice->items as $item)
-                            <tr>
+                            <tr class="item-row">
                                 <td class="py-5">{{ $item->product->name }}</td>
                                 <td class="py-5 text-center">
                                     <input type="number" name="items[{{ $item->id }}][quantity]" 
                                         value="{{ old('items.'.$item->id.'.quantity', $item->quantity) }}" 
                                         min="1" 
-                                        class="w-20 bg-gray-50 border border-gray-200 text-center rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 transition mx-auto disabled:opacity-60 disabled:cursor-not-allowed"
+                                        data-price="{{ $item->product->price }}"
+                                        class="qty-input w-20 bg-gray-50 border border-gray-200 text-center rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 transition mx-auto disabled:opacity-60 disabled:cursor-not-allowed"
                                         {{ $invoice->status == 'completed' ? 'disabled' : '' }}>
                                 </td>
-                                <td class="py-5 text-right font-medium text-gray-600">
+                                {{-- TAMBAHAN: class 'item-subtotal' agar mudah dicari oleh JavaScript --}}
+                                <td class="py-5 text-right font-medium text-gray-600 item-subtotal">
                                     Rp {{ number_format($item->subtotal, 0, ',', '.') }}
                                 </td>
                             </tr>
@@ -97,7 +99,8 @@
                     <div class="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                         <div class="text-right">
                             <p class="text-xs text-gray-500 font-medium">Total Price</p>
-                            <p class="text-lg font-bold text-gray-900">Rp {{ number_format($invoice->total_price, 0, ',', '.') }}</p>
+                            {{-- TAMBAHAN: id="grand-total" --}}
+                            <p class="text-lg font-bold text-gray-900" id="grand-total">Rp {{ number_format($invoice->total_price, 0, ',', '.') }}</p>
                         </div>
                         
                         {{-- Tombol Save Changes Hanya Muncul Jika Masih Pending --}}
@@ -112,4 +115,49 @@
             </form>
         </div>
     </div>
+
+{{-- SCRIPT UNTUK REAL-TIME CALCULATION --}}
+@if($invoice->status == 'pending')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const qtyInputs = document.querySelectorAll('.qty-input');
+        const grandTotalEl = document.getElementById('grand-total');
+
+        // Fungsi untuk format angka ke Rupiah (misal: 1000000 -> 1.000.000)
+        function formatRupiah(angka) {
+            return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        qtyInputs.forEach(input => {
+            // Dengarkan setiap kali ada input (diketik atau diklik panah atas/bawah)
+            input.addEventListener('input', function() {
+                // 1. Hitung Subtotal per baris
+                let qty = parseInt(this.value);
+                if (isNaN(qty) || qty < 1) qty = 1; // Cegah input kosong atau minus
+                
+                const price = parseFloat(this.getAttribute('data-price'));
+                const newSubtotal = qty * price;
+
+                // Update text subtotal di baris yang sama
+                const row = this.closest('tr');
+                const subtotalEl = row.querySelector('.item-subtotal');
+                subtotalEl.textContent = formatRupiah(newSubtotal);
+
+                // 2. Hitung Ulang Grand Total (Total keseluruhan)
+                let newGrandTotal = 0;
+                qtyInputs.forEach(inp => {
+                    let currentQty = parseInt(inp.value);
+                    if (isNaN(currentQty) || currentQty < 1) currentQty = 1;
+                    
+                    let currentPrice = parseFloat(inp.getAttribute('data-price'));
+                    newGrandTotal += (currentQty * currentPrice);
+                });
+
+                // Update text Grand Total di pojok kanan bawah
+                grandTotalEl.textContent = formatRupiah(newGrandTotal);
+            });
+        });
+    });
+</script>
+@endif
 @endsection
