@@ -290,7 +290,7 @@ Secure login and registration flow with validation handling.
 
 To see the application in action:
 
-👉 **https://youtu.be/2IDoOiJj0DE**
+👉 **[Watch the video demo here!](https://youtu.be/2IDoOiJj0DE)**
 
 The video demonstrates:
 
