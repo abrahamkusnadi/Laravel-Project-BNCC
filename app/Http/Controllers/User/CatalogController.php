@@ -65,16 +65,15 @@ class CatalogController extends Controller
         $item = $invoice->items()->where('product_id', $product->id)->first();
 
         if ($item) {
-            $item->quantity += 1;
-            $item->subtotal = $item->quantity * $product->price;
-            $item->save();
-        } else {
-            $invoice->items()->create([
-                'product_id' => $product->id,
-                'quantity'   => 1,
-                'subtotal'   => $product->price,
-            ]);
-        }
+            return redirect()->route('user.invoices.show', $invoice->id)
+                ->with('success', "{$product->name} is already in your cart. You can adjust the quantity here!");
+        } 
+        
+        $invoice->items()->create([
+            'product_id' => $product->id,
+            'quantity'   => 1,
+            'subtotal'   => $product->price,
+        ]);
 
         $product->stock -= 1;
         $product->save();
@@ -84,6 +83,6 @@ class CatalogController extends Controller
         ]);
 
         return redirect()->route('user.invoices.show', $invoice->id)
-            ->with('success', 'Product Added to invoice!');
+            ->with('success', 'Product added to invoice!');
     }
 }

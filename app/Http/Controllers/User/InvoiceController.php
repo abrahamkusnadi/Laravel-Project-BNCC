@@ -32,6 +32,37 @@ class InvoiceController extends Controller
         return redirect()->route('user.catalog')->with('error', 'Your cart is empty. Start shopping now!');
     }
 
+    public function addToCart(Request $request, Product $product)
+    {
+        $invoice = Invoice::firstOrCreate(
+            ['user_id' => auth()->id(), 'status' => 'pending'],
+            ['total_price' => 0]
+        );
+
+        $inputQty = $request->input('quantity', 1);
+
+        $invoiceItem = $invoice->items()->where('product_id', $product->id)->first();
+
+        if ($invoiceItem) {
+            $invoiceItem->quantity += $inputQty;
+            $invoiceItem->subtotal = $invoiceItem->quantity * $product->price;
+            $invoiceItem->save();
+            
+        } else {
+            $invoice->items()->create([
+                'product_id' => $product->id,
+                'quantity' => $inputQty,
+                'subtotal' => $inputQty * $product->price
+            ]);
+        }
+
+        $invoice->update([
+            'total_price' => $invoice->items()->sum('subtotal')
+        ]);
+
+        return redirect()->back()->with('success', 'Product successfully added to your cart!');
+    }
+
     public function print(Invoice $invoice)
     {
         if ($invoice->user_id != auth()->id()) {
@@ -44,7 +75,6 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice)
     {
-        // Pastikan user tidak bisa mengintip invoice milik orang lain
         if ($invoice->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
@@ -56,12 +86,10 @@ class InvoiceController extends Controller
 
     public function update(Request $request, Invoice $invoice)
     {
-        // Validasi akses
         if ($invoice->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
 
-        // Cegah update jika sudah completed
         if ($invoice->status === 'completed') {
             return redirect()->route('user.invoices.index')->with('error', 'This invoice has already been completed.');
         }
@@ -87,16 +115,13 @@ class InvoiceController extends Controller
             $oldQty = $item->quantity;
             $stockChange = $newQty - $oldQty;
 
-            // Jika user menambah quantity di keranjang, cek stok lagi
             if ($stockChange > 0 && $product->stock < $stockChange) {
                 return redirect()->back()->with('error', "Sorry, not enough stock for {$product->name}. Only {$product->stock} left!");
             }  
 
-            // Kurangi/tambah stok master
             $product->stock -= $stockChange;
             $product->save();
 
-            // Update item di invoice
             $item->quantity = $newQty;
             $item->subtotal = $newQty * $product->price;
             $item->save();
@@ -118,7 +143,6 @@ class InvoiceController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // Jika invoice dibatalkan (dihapus), kita harus mengembalikan stok barangnya ke database
         if ($invoice->status === 'pending') {
             foreach ($invoice->items as $item) {
                 $product = $item->product;
