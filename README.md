@@ -146,69 +146,58 @@ Product (1)
 
 ## Conceptual ERD
 
-┌──────────────┐
-│  categories  │
-├──────────────┤
-│ id (PK)      │
-│ name         │
-│ description  │
-└──────┬───────┘
-       │ 1
-       │
-       │
-       ▼
-┌──────────────┐
-│   products   │
-├──────────────┤
-│ id (PK)      │
-│ category_id  │ FK
-│ name         │
-│ price        │
-│ stock        │
-│ image        │
-└──────┬───────┘
-       │ 1
-       │
-       │
-       ▼
-┌────────────────┐
-│ invoice_items  │
-├────────────────┤
-│ id (PK)        │
-│ invoice_id FK  │
-│ product_id FK  │
-│ quantity       │
-│ subtotal       │
-└──────┬─────────┘
-       ▲
-       │
-       │ Many
-       │
-┌──────┴───────┐
-│   invoices   │
-├──────────────┤
-│ id (PK)      │
-│ user_id FK   │
-│ invoice_no   │
-│ address      │
-│ postal_code  │
-│ total_price  │
-│ status       │
-└──────┬───────┘
-       ▲
-       │ Many
-       │
-       │
-┌──────┴───────┐
-│    users     │
-├──────────────┤
-│ id (PK)      │
-│ name         │
-│ email        │
-│ phone        │
-│ password     │
-└──────────────┘
+```mermaid
+erDiagram
 
+    CATEGORIES ||--o{ PRODUCTS : contains
+
+    USERS ||--o{ INVOICES : creates
+
+    INVOICES ||--o{ INVOICE_ITEMS : contains
+
+    PRODUCTS ||--o{ INVOICE_ITEMS : purchased_in
+
+    CATEGORIES {
+        bigint id PK
+        string name
+        text description
+    }
+
+    PRODUCTS {
+        bigint id PK
+        bigint category_id FK
+        string name
+        decimal price
+        int stock
+        string image
+    }
+
+    USERS {
+        bigint id PK
+        string name
+        string email
+        string phone
+        string password
+    }
+
+    INVOICES {
+        bigint id PK
+        bigint user_id FK
+        string invoice_number
+        string address
+        string postal_code
+        decimal total_price
+        string status
+    }
+
+    INVOICE_ITEMS {
+        bigint id PK
+        bigint invoice_id FK
+        bigint product_id FK
+        int quantity
+        decimal subtotal
+    }
+```
 ---
 
 # 🛠 Tech Stack
