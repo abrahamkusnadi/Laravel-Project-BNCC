@@ -63,7 +63,9 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($product->image);
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
             $validated['image'] = $request->file('image')->store('products', 'public');
         } else {
             $validated['image'] = $product->image; // kalau tidak upload, pakai gambar lama
