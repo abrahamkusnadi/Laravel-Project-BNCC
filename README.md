@@ -58,6 +58,10 @@ Secure and clean entry points for users, featuring real-time validation error ha
 A clean management interface allowing admins to seamlessly organize categories, update product stock, and view recent orders.
 - **Admin Dashboard (Analytics & Recent Orders)**  
   ![Admin Dashboard](screenshots/AdminDashboard.png)  
+- **Admin Viewing Invoice**
+  ![Admin View Invoice](screenshots/AdminInvoice.png) 
+- **Admin Viewing User Page**
+  ![Admin View User Page](screenshots/AdminViewUserPage.png) 
 - **Product Management**  
   ![Product](screenshots/Product.png)  
 - **Add/Edit Product Interface**  
@@ -86,7 +90,7 @@ A frictionless checkout experience. Users can browse the catalog, add items to t
 
 To see the state management, stock validation, and the Tailwind CSS responsive UI in action, please watch the full project demo:
 
-👉 **[Watch the Demo Video Here](https://youtu.be/KpiExPd_ghw)**
+👉 **[Watch the Demo Video Here](https://youtu.be/2IDoOiJj0DE)**
 
 ---
 
