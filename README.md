@@ -482,19 +482,18 @@ Password : admin123
 
 ---
 
-# 🔮 Future Improvements
+## 🚀 Roadmap & Potential Enhancements
 
-Potential enhancements for future versions:
+We are continuously looking to improve this project. Here are some of the planned features for future releases:
 
-* Product Search & Filtering
-* Product Export to Excel
-* Email Invoice Delivery
-* REST API Version
-* Docker Containerization
-* Unit Testing Coverage
-* Feature Testing Coverage
-* Dashboard Charts using Chart.js
-* Product Barcode Support
+- [ ] **Docker Containerization:** Containerize the application and database for isolated, consistent development environments.
+- [ ] **Testing Coverage:** Implement comprehensive Unit and Feature Testing to ensure backend reliability.
+- [ ] **Email Delivery:** Automated email notifications for invoices and successful checkouts.
+- [ ] **Excel Export:** Allow admins to export product catalogs and sales reports to `.xlsx`.
+- [ ] **Interactive Dashboards:** Integrate Chart.js for visualizing revenue and user growth analytics.
+- [ ] **Barcode Support:** Implement product barcode generation and scanning for faster catalog management.
+
+*Want to contribute? Feel free to pick up any of these tasks and submit a Pull Request!*
 
 ---
 
