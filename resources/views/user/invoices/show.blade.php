@@ -16,13 +16,11 @@
             </div>
         @endif
 
-        {{-- Top Navigation & Print Action --}}
         <div class="mb-6 flex justify-between items-center">
             <a href="{{ route('user.invoices.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition flex items-center gap-2">
                 &larr; Back to Invoices
             </a>
 
-            {{-- Tombol Print Hanya Muncul Jika Invoice Sudah Completed --}}
             @if($invoice->status == 'completed')
                 <a href="{{ route('user.invoices.print', $invoice->id) }}" target="_blank" class="inline-flex items-center gap-2 bg-gray-900 hover:bg-black text-white text-sm font-medium px-5 py-2.5 rounded-xl transition shadow-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,7 +83,6 @@
                                         class="qty-input w-20 bg-gray-50 border border-gray-200 text-center rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 transition mx-auto disabled:opacity-60 disabled:cursor-not-allowed"
                                         {{ $invoice->status == 'completed' ? 'disabled' : '' }}>
                                 </td>
-                                {{-- TAMBAHAN: class 'item-subtotal' agar mudah dicari oleh JavaScript --}}
                                 <td class="py-5 text-right font-medium text-gray-600 item-subtotal">
                                     Rp {{ number_format($item->subtotal, 0, ',', '.') }}
                                 </td>
@@ -99,11 +96,9 @@
                     <div class="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                         <div class="text-right">
                             <p class="text-xs text-gray-500 font-medium">Total Price</p>
-                            {{-- TAMBAHAN: id="grand-total" --}}
                             <p class="text-lg font-bold text-gray-900" id="grand-total">Rp {{ number_format($invoice->total_price, 0, ',', '.') }}</p>
                         </div>
                         
-                        {{-- Tombol Save Changes Hanya Muncul Jika Masih Pending --}}
                         @if($invoice->status == 'pending')
                             <button type="submit" class="bg-gray-900 hover:bg-black text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow-sm">
                                 Complete Checkout
@@ -116,34 +111,28 @@
         </div>
     </div>
 
-{{-- SCRIPT UNTUK REAL-TIME CALCULATION --}}
 @if($invoice->status == 'pending')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const qtyInputs = document.querySelectorAll('.qty-input');
         const grandTotalEl = document.getElementById('grand-total');
 
-        // Fungsi untuk format angka ke Rupiah (misal: 1000000 -> 1.000.000)
         function formatRupiah(angka) {
             return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
         qtyInputs.forEach(input => {
-            // Dengarkan setiap kali ada input (diketik atau diklik panah atas/bawah)
             input.addEventListener('input', function() {
-                // 1. Hitung Subtotal per baris
                 let qty = parseInt(this.value);
-                if (isNaN(qty) || qty < 1) qty = 1; // Cegah input kosong atau minus
+                if (isNaN(qty) || qty < 1) qty = 1;
                 
                 const price = parseFloat(this.getAttribute('data-price'));
                 const newSubtotal = qty * price;
 
-                // Update text subtotal di baris yang sama
                 const row = this.closest('tr');
                 const subtotalEl = row.querySelector('.item-subtotal');
                 subtotalEl.textContent = formatRupiah(newSubtotal);
 
-                // 2. Hitung Ulang Grand Total (Total keseluruhan)
                 let newGrandTotal = 0;
                 qtyInputs.forEach(inp => {
                     let currentQty = parseInt(inp.value);
@@ -153,7 +142,6 @@
                     newGrandTotal += (currentQty * currentPrice);
                 });
 
-                // Update text Grand Total di pojok kanan bawah
                 grandTotalEl.textContent = formatRupiah(newGrandTotal);
             });
         });
