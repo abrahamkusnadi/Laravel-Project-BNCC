@@ -35,6 +35,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', IsAdmin::class])->gr
     // Products & Categories
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
+    Route::get('/invoices/{invoice}', [AdminInvoiceController::class, 'show'])->name('invoices.show');
 });
 
 // USER ROUTES (Prefix: /user, Name: user.*)
