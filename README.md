@@ -146,44 +146,68 @@ Product (1)
 
 ## Conceptual ERD
 
-```text
-Category
----------
-id
-name
-    │
-    │ 1
-    ▼
-Product
----------
-id
-category_id
-name
-price
-stock
-image
-
-User
----------
-id
-name
-email
-
-Invoice
----------
-id
-user_id
-invoice_number
-status
-
-InvoiceDetail
----------
-id
-invoice_id
-product_id
-quantity
-price
-```
+┌──────────────┐
+│  categories  │
+├──────────────┤
+│ id (PK)      │
+│ name         │
+│ description  │
+└──────┬───────┘
+       │ 1
+       │
+       │
+       ▼
+┌──────────────┐
+│   products   │
+├──────────────┤
+│ id (PK)      │
+│ category_id  │ FK
+│ name         │
+│ price        │
+│ stock        │
+│ image        │
+└──────┬───────┘
+       │ 1
+       │
+       │
+       ▼
+┌────────────────┐
+│ invoice_items  │
+├────────────────┤
+│ id (PK)        │
+│ invoice_id FK  │
+│ product_id FK  │
+│ quantity       │
+│ subtotal       │
+└──────┬─────────┘
+       ▲
+       │
+       │ Many
+       │
+┌──────┴───────┐
+│   invoices   │
+├──────────────┤
+│ id (PK)      │
+│ user_id FK   │
+│ invoice_no   │
+│ address      │
+│ postal_code  │
+│ total_price  │
+│ status       │
+└──────┬───────┘
+       ▲
+       │ Many
+       │
+       │
+┌──────┴───────┐
+│    users     │
+├──────────────┤
+│ id (PK)      │
+│ name         │
+│ email        │
+│ phone        │
+│ password     │
+└──────────────┘
 
 ---
 
