@@ -10,6 +10,23 @@
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
     
+    @auth
+        @if(auth()->user()->role === 'admin')
+            <div class="bg-blue-600 text-white px-4 py-2 text-sm flex justify-between items-center z-[60] relative">
+                <span class="flex items-center gap-2 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    You are currently viewing the user site in <strong>Admin Preview Mode</strong>
+                    <a href="{{ route('admin.dashboard') }}" class="ml-auto bg-white text-blue-600 hover:bg-blue-50 px-4 py-1 rounded-md font-semibold transition-colors shadow-sm">
+                        Return to Admin Dashboard
+                    </a>
+                </span>
+            </div>
+        @endif
+    @endauth
+
     {{-- User Navigation Bar --}}
     <nav class="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

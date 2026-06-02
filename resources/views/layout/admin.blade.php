@@ -12,7 +12,6 @@
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
     
-    {{-- Navbar Khusus Admin --}}
     <nav class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -23,7 +22,6 @@
                         </a>
                     </div>
                     
-                    {{-- Navigation Links Admin --}}
                     <div class="hidden sm:flex sm:space-x-8 h-full">
                         <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ Route::is('admin.dashboard') ? 'border-gray-900 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300' }} text-sm font-medium transition-colors">
                             Dashboard
@@ -40,9 +38,7 @@
                 </div>
 
                 <div class="hidden sm:flex sm:items-center gap-6">
-                    
-                    {{-- NEW BUTTON: View Site (Opens in new tab) --}}
-                    <a href="{{ url('/user/dashboard') }}" target="_blank" class="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-md flex items-center gap-1 border border-blue-200">
+                    <a href="{{ url('/user/dashboard') }}" class="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-md flex items-center gap-1 border border-blue-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />

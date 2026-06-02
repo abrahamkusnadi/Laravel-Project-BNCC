@@ -66,8 +66,12 @@
             </thead>
             <tbody class="divide-y divide-gray-50">
                 @forelse($data['recent_orders'] as $order)
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="py-4 px-6 font-semibold text-blue-600">{{ $order->invoice_number }}</td>
+                    <tr class="hover:bg-gray-50 transition group">
+                        <td class="py-4 px-6 font-semibold">
+                            <a href="{{ route('admin.invoices.show', $order->id) }}" class="text-blue-600 group-hover:text-blue-800 group-hover:underline transition">
+                                {{ $order->invoice_number }}
+                            </a>
+                        </td>
                         <td class="py-4 px-6 text-gray-700">{{ $order->user->name ?? 'Guest' }}</td>
                         <td class="py-4 px-6 text-gray-500">{{ $order->created_at->format('M d, Y') }}</td>
                         <td class="py-4 px-6 text-right font-bold text-gray-900">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
